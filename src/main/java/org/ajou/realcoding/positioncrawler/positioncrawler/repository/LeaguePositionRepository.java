@@ -26,9 +26,10 @@ public class LeaguePositionRepository {
     }
 
     public boolean isExistLeaguePosition(List<LeaguePosition> leaguePosition) {
-        if (mongoTemplate.exists(Query.query(Criteria.where("summonerId").is(leaguePosition.get(0).getSummonerId())), LeaguePosition.class)) {
-            return true;
-        }
-        return false;
+        return mongoTemplate.exists(Query.query(Criteria.where("summonerId").is(leaguePosition.get(0).getSummonerId())), LeaguePosition.class);
+    }
+
+    public void updateLeaguePosition(List<LeaguePosition> leaguePosition){
+
     }
 }
