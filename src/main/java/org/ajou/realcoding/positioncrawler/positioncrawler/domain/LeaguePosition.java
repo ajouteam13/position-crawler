@@ -8,7 +8,7 @@ public class LeaguePosition {
     private String queueType;
     private String summonerName;
     private boolean hotStreak;
-
+    private MiniSeriesDTO miniSeries;
     private int wins;
     private boolean veteran;
     private int losses;
@@ -16,6 +16,15 @@ public class LeaguePosition {
     private String tier;
     private String summonerId;
     private int leaguePoints;
+    @Id
+    private String id;
 
+    @Data
+    private static class MiniSeriesDTO {
+        private String progress;
+        private int losses;
+        private int target;
+        private int wins;
+    }
 
 }
