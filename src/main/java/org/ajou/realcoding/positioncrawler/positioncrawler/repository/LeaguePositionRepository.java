@@ -16,20 +16,18 @@ public class LeaguePositionRepository {
     @Autowired
     MongoTemplate mongoTemplate;
 
-    public void insertLeaguePosition(List<LeaguePosition> leaguePosition) {
-        mongoTemplate.insert(leaguePosition, LeaguePosition.class);
-    }
 
     public List<LeaguePosition> findLeaguePosition(String encryptedSummonerId) {
-        List<LeaguePosition> leaguePositionList = mongoTemplate.find(Query.query(Criteria.where("summonerId").is(encryptedSummonerId)), LeaguePosition.class);
-        return leaguePositionList;
+        return mongoTemplate.find(Query.query(Criteria.where("summonerId").is(encryptedSummonerId)), LeaguePosition.class);
     }
 
-    public boolean isExistLeaguePosition(List<LeaguePosition> leaguePosition) {
-        return mongoTemplate.exists(Query.query(Criteria.where("summonerId").is(leaguePosition.get(0).getSummonerId())), LeaguePosition.class);
-    }
+    public void insertOrUpdateLeaguePosition(List<LeaguePosition> leaguePosition) {
+        for (LeaguePosition position : leaguePosition) {
 
-    public void updateLeaguePosition(List<LeaguePosition> leaguePosition){
+            mongoTemplate.save(position);
+
+            log.info("insert or update: " + position);
+        }
 
     }
 }

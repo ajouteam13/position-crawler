@@ -12,10 +12,7 @@ public class LeaguePosition {
     private int wins;
     private boolean veteran;
     private int losses;
-    private String rank;
-    private String leagueId;
-    private boolean inactive;
-    private boolean freshBlood;
+
     private String tier;
     private String summonerId;
     private int leaguePoints;
@@ -29,4 +26,5 @@ public class LeaguePosition {
         private int target;
         private int wins;
     }
+
 }
