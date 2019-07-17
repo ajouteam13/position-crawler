@@ -26,11 +26,16 @@ public class PositionService {
     public List<LeaguePosition> getLeaguePositionBySummonerName(String summonerName) {
         String encryptedSummonerId = this.getEncryptedSummonerId(summonerName);
         List<LeaguePosition> leaguePositionList = developerRiotgamesApiClient.requestLeaguePosition(encryptedSummonerId);
+        this.setIdBySummonerNameAndQueueType(leaguePositionList);
+        leaguePositionRepository.insertOrUpdateLeaguePosition(leaguePositionList);
+        return leaguePositionRepository.findLeaguePosition(encryptedSummonerId);
+    }
 
+    private void setIdBySummonerNameAndQueueType(List<LeaguePosition> leaguePositionList) {
         for (LeaguePosition position : leaguePositionList) {
             position.setId(position.getSummonerName() + position.getQueueType());
         }
+
         log.info("leaguePositionList: " + leaguePositionList);
-        return leaguePositionRepository.findLeaguePosition(encryptedSummonerId);
     }
 }
