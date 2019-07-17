@@ -1,5 +1,6 @@
 package org.ajou.realcoding.positioncrawler.positioncrawler.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.ajou.realcoding.positioncrawler.positioncrawler.domain.LeaguePosition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@Slf4j
 public class LeaguePositionRepository {
     @Autowired
     MongoTemplate mongoTemplate;
@@ -21,5 +23,13 @@ public class LeaguePositionRepository {
     public List<LeaguePosition> findLeaguePosition(String encryptedSummonerId) {
         List<LeaguePosition> leaguePositionList = mongoTemplate.find(Query.query(Criteria.where("summonerId").is(encryptedSummonerId)), LeaguePosition.class);
         return leaguePositionList;
+    }
+
+    public boolean isExistLeaguePosition(List<LeaguePosition> leaguePosition) {
+        return mongoTemplate.exists(Query.query(Criteria.where("summonerId").is(leaguePosition.get(0).getSummonerId())), LeaguePosition.class);
+    }
+
+    public void updateLeaguePosition(List<LeaguePosition> leaguePosition){
+
     }
 }
